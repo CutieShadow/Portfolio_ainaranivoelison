@@ -25,7 +25,7 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Full Stack
+          Frontend
         </span>
       </span>
       <br />
@@ -78,7 +78,7 @@ const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = ["Developper Student"];
-const TECH_STACK = ["React", "Javascript", "Node.js", "Laravel", "PHP"];
+const TECH_STACK = ["React", "Javascript", "Node.js", "Next.js", "Tailwind CSS"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/NoahJoselito" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/noah-joselito-4a13a8329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
@@ -143,7 +143,7 @@ const Home = () => {
 
   // Lottie configuration
   const lottieOptions = {
-    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
+    src: "https://assets3.lottiefiles.com/private_files/lf30_WdTEui.json",
     loop: true,
     autoplay: true,
     rendererSettings: {

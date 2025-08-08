@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { db, collection } from "../firebase";
-import { getDocs } from "firebase/firestore";
-import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
+import PropTypes from 'prop-types';
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -15,6 +12,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
 import { Code, Award, Boxes } from "lucide-react";
+import { projects, certificates } from "../data/firebase-mock";
 
 // Separate ShowMore/ShowLess button component
 const ToggleButton = ({ onClick, isShowingMore }) => (
@@ -101,25 +99,47 @@ function a11yProps(index) {
 }
 
 const techStacks = [
-  { icon: "html.svg", language: "HTML" },
-  { icon: "css.svg", language: "CSS" },
-  { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
-  { icon: "reactjs.svg", language: "ReactJS" },
-  { icon: "vite.svg", language: "Vite" },
-  { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "firebase.svg", language: "Firebase" },
-  { icon: "MUI.svg", language: "Material UI" },
-  { icon: "vercel.svg", language: "Vercel" },
-  { icon: "SweetAlert.svg", language: "SweetAlert2" },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    language: "HTML"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    language: "CSS"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    language: "JavaScript"
+  },
+  { 
+    icon: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
+    language: "Tailwind CSS"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    language: "ReactJS"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg",
+    language: "Vite"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    language: "Node JS"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+    language: "Bootstrap"
+  },
+  { 
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+    language: "Material UI"
+  },
 ];
 
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [projects, setProjects] = useState([]);
-  const [certificates, setCertificates] = useState([]);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const isMobile = window.innerWidth < 768;
@@ -131,39 +151,6 @@ export default function FullWidthTabs() {
       once: false, // This will make animations occur only once
     });
   }, []);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const projectCollection = collection(db, "projects");
-      const certificateCollection = collection(db, "certificates");
-
-      const [projectSnapshot, certificateSnapshot] = await Promise.all([
-        getDocs(projectCollection),
-        getDocs(certificateCollection),
-      ]);
-
-      const projectData = projectSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        TechStack: doc.data().TechStack || [],
-      }));
-
-      const certificateData = certificateSnapshot.docs.map((doc) => doc.data());
-
-      setProjects(projectData);
-      setCertificates(certificateData);
-
-      // Store in localStorage
-      localStorage.setItem("projects", JSON.stringify(projectData));
-      localStorage.setItem("certificates", JSON.stringify(certificateData));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -179,6 +166,36 @@ export default function FullWidthTabs() {
 
   const displayedProjects = showAllProjects ? projects : projects.slice(0, initialItems);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
+
+  // Mise à jour du composant ProjectImages avec une meilleure gestion des images
+  const ProjectImages = ({ images }) => {
+    const [currentImage, setCurrentImage] = useState(0);
+
+    if (!images?.length) return null;
+
+    return (
+      <div className="relative group h-[250px] overflow-hidden rounded-t-lg">
+        <img
+          src={images[currentImage]}
+          alt={`Project screenshot ${currentImage + 1}`}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        {images.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImage(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentImage ? 'bg-white scale-125' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portofolio">
@@ -289,11 +306,7 @@ export default function FullWidthTabs() {
           </Tabs>
         </AppBar>
 
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={setValue}
-        >
+        <Box>
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -302,7 +315,9 @@ export default function FullWidthTabs() {
                     key={project.id || index}
                     data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                    className="bg-white/5 rounded-lg overflow-hidden backdrop-blur-sm border border-white/10"
                   >
+                    <ProjectImages images={project.screenshots} />
                     <CardProject
                       Img={project.Img}
                       Title={project.Title}
@@ -363,7 +378,7 @@ export default function FullWidthTabs() {
               </div>
             </div>
           </TabPanel>
-        </SwipeableViews>
+        </Box>
       </Box>
     </div>
   );

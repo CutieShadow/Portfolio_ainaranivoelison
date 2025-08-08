@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
-import { getDocs, addDoc, collection, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../firebase-comment';
+import { comments as mockComments, addComment as mockAddComment, likeComment as mockLikeComment } from '../data/comment-mock';
 import { MessageCircle, UserCircle2, Loader2, AlertCircle, Send, ImagePlus, X } from 'lucide-react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Comment = memo(({ comment, formatDate, index }) => (
+const Comment = memo(({ comment, formatDate, index, onLike }) => (
     <div 
         className="px-4 pt-4 pb-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group hover:shadow-lg hover:-translate-y-0.5"
         
@@ -33,6 +31,21 @@ const Comment = memo(({ comment, formatDate, index }) => (
                 </div>
                 <p className="text-gray-300 text-sm break-words leading-relaxed relative bottom-2">{comment.content}</p>
             </div>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+            <button
+                onClick={onLike}
+                className="flex items-center gap-1 text-gray-400 hover:text-indigo-400 transition-colors"
+            >
+                {comment.likes > 0 && (
+                    <span className="text-xs bg-indigo-500/10 rounded-full px-2 py-1">
+                        {comment.likes}
+                    </span>
+                )}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 9V5.236A2.236 2.236 0 0011.764 3h-1.528A2.236 2.236 0 007 5.236V9m7 0H7m7 0v6m0 0H7m7 0l3.5 3.5M10.5 15.5L7 19m7-3.5l3.5-3.5M7 9l3.5-3.5M17 9l3.5-3.5M7 19l3.5-3.5" />
+                </svg>
+            </button>
         </div>
     </div>
 ));
@@ -85,7 +98,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
                 <input
                     type="text"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)}z
+                    onChange={(e) => setUserName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     required
@@ -194,17 +207,9 @@ const Komentar = () => {
         });
     }, []);
 
+    // Initialisation des commentaires
     useEffect(() => {
-        const commentsRef = collection(db, 'portfolio-comments');
-        const q = query(commentsRef, orderBy('createdAt', 'desc'));
-        
-        return onSnapshot(q, (querySnapshot) => {
-            const commentsData = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setComments(commentsData);
-        });
+        setComments(mockComments);
     }, []);
 
     const uploadImage = useCallback(async (imageFile) => {
@@ -220,12 +225,13 @@ const Komentar = () => {
         
         try {
             const profileImageUrl = await uploadImage(imageFile);
-            await addDoc(collection(db, 'portfolio-comments'), {
+            const addedComment = mockAddComment({
                 content: newComment,
                 userName,
                 profileImage: profileImageUrl,
-                createdAt: serverTimestamp(),
+                createdAt: new Date(),
             });
+            setComments(prev => [addedComment, ...prev]);
         } catch (error) {
             setError('Failed to post comment. Please try again.');
             console.error('Error adding comment: ', error);
@@ -233,6 +239,21 @@ const Komentar = () => {
             setIsSubmitting(false);
         }
     }, [uploadImage]);
+
+    const handleLike = useCallback((commentId) => {
+        try {
+            const newLikes = mockLikeComment(commentId);
+            setComments(prev => 
+                prev.map(comment => 
+                    comment.id === commentId 
+                        ? { ...comment, likes: newLikes }
+                        : comment
+                )
+            );
+        } catch (error) {
+            console.error("Error updating like:", error);
+        }
+    }, []);
 
     const formatDate = useCallback((timestamp) => {
         if (!timestamp) return '';
@@ -291,6 +312,7 @@ const Komentar = () => {
                             comment={comment} 
                             formatDate={formatDate}
                             index={index}
+                            onLike={() => handleLike(comment.id)}
                         />
                     ))
                 )}

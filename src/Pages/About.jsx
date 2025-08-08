@@ -118,7 +118,7 @@ const AboutPage = () => {
     const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
     const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
     
-    const startDate = new Date("2021-11-06");
+    const startDate = new Date("2022-11-06");
     const today = new Date();
     const experience = today.getFullYear() - startDate.getFullYear() -
       (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
@@ -205,7 +205,7 @@ const AboutPage = () => {
                 data-aos="fade-right"
                 data-aos-duration="1300"
               >
-                Noah Joselito
+                ANDRIAMAMONJY Noah Joselito
               </span>
             </h2>
             
@@ -221,7 +221,11 @@ const AboutPage = () => {
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://drive.google.com/drive/u/0/folders/1ey-oIYSM8dEL2ja9bmTHvvXan5OSA775" className="w-full lg:w-auto">
+              <a 
+                href="/public/assets/CV.pdf" 
+                download="ANDRIAMAMONJY_Noah_CV.pdf"
+                className="w-full lg:w-auto"
+              >
               <button 
                 data-aos="fade-up"
                 data-aos-duration="800"
