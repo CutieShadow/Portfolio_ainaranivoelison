@@ -170,15 +170,46 @@ export default function FullWidthTabs() {
   // Mise à jour du composant ProjectImages avec une meilleure gestion des images
   const ProjectImages = ({ images }) => {
     const [currentImage, setCurrentImage] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
 
     if (!images?.length) return null;
 
+    useEffect(() => {
+      if (!images || images.length <= 1 || isHovered) return;
+      const intervalId = setInterval(() => {
+        setCurrentImage((prev) => (prev + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(intervalId);
+    }, [images, isHovered]);
+
     return (
-      <div className="relative group h-[250px] overflow-hidden rounded-t-lg">
+      <div
+        className="relative group h-[300px] overflow-hidden rounded-t-lg"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <img
           src={images[currentImage]}
           alt={`Project screenshot ${currentImage + 1}`}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          onError={(e) => {
+            // fallback chain: try public thumbnail, then generic photo
+            const tried = e.currentTarget.getAttribute('data-tried') || '';
+            if (!tried.includes('thumb') && images.includes('/projets/portfolio/thumbnail.png')) {
+              e.currentTarget.src = '/projets/portfolio/thumbnail.png';
+              e.currentTarget.setAttribute('data-tried', tried + ' thumb');
+              return;
+            }
+            if (!tried.includes('photo1')) {
+              e.currentTarget.src = '/Photo1.png';
+              e.currentTarget.setAttribute('data-tried', tried + ' photo1');
+              return;
+            }
+            if (!tried.includes('photo')) {
+              e.currentTarget.src = '/Photo.jpg';
+              e.currentTarget.setAttribute('data-tried', tried + ' photo');
+            }
+          }}
         />
         {images.length > 1 && (
           <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
@@ -324,6 +355,7 @@ export default function FullWidthTabs() {
                       Description={project.Description}
                       Link={project.Link}
                       id={project.id}
+                      hideImage={Array.isArray(project.screenshots) && project.screenshots.length > 0}
                     />
                   </div>
                 ))}

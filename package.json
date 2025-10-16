@@ -13,6 +13,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@lottiefiles/dotlottie-react": "^0.2.0",
+    "@mui/icons-material": "^5.18.0",
     "@mui/material": "^5.14.11",
     "@mui/styles": "^5.14.11",
     "aos": "^2.3.4",

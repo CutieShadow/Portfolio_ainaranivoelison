@@ -67,7 +67,19 @@ const Certificate = ({ ImgSertif }) => {
 							filter: "contrast(1.10) brightness(0.9) saturate(1.1)",
 							transition: "filter 0.3s ease",
 						}}
-						onClick={handleOpen}
+					onClick={handleOpen}
+					onError={(e) => {
+						const tried = e.currentTarget.getAttribute('data-tried') || '';
+						if (!tried.includes('photo1')) {
+							e.currentTarget.src = '/Photo1.png';
+							e.currentTarget.setAttribute('data-tried', tried + ' photo1');
+							return;
+						}
+						if (!tried.includes('photo')) {
+							e.currentTarget.src = '/Photo.jpg';
+							e.currentTarget.setAttribute('data-tried', tried + ' photo');
+						}
+					}}
 					/>
 				</Box>
 
@@ -187,6 +199,13 @@ const Certificate = ({ ImgSertif }) => {
 							margin: "0 auto",
 							objectFit: "contain",
 						}}
+					onError={(e) => {
+						if (e.currentTarget.src.endsWith('/Photo1.png')) {
+							e.currentTarget.src = '/Photo.jpg';
+						} else {
+							e.currentTarget.src = '/Photo1.png';
+						}
+					}}
 					/>
 				</Box>
 			</Modal>

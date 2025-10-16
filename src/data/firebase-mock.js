@@ -6,9 +6,9 @@ export const projects = [
     Link: "https://example.com",
     Img: "/projets/portfolio/thumbnail.png",
     screenshots: [
-      "/projets/2.png",
-      "/projets/portfolio/screen2.png",
-      "/projets/portfolio/screen3.png"
+      "/2.png",
+      "/20.png",
+      "/3.png"
     ]
   },
   {
@@ -16,25 +16,37 @@ export const projects = [
     Title: "E-commerce App",
     Description: "Application e-commerce",
     Link: "https://example.com/shop",
-    Img: "/projets/ecommerce/thumbnail.png",
+    Img: "/projets/portfolio/thumbnail.png",
     screenshots: [
-      "/projets/ecommerce/screen1.png",
-      "/projets/ecommerce/screen2.png",
-      "/projets/ecommerce/screen3.png"
+      "/Photo.jpg",
+      "/Photo1.png",
+      "/2.png"
     ]
-  }
+  },
+  {
+    id: 3,
+    Title: "E-commerce App",
+    Description: "Application e-commerce",
+    Link: "https://example.com/shop",
+    Img: "/projets/portfolio/thumbnail.png",
+    screenshots: [
+      "/Photo.jpg",
+      "/Photo1.png",
+      "/2.png"
+    ]
+  },
   // ...autres projets
 ];
 
 export const certificates = [
   {
     id: "1",
-    Img: "/certificates/cert1.webp",
+    Img: "/Photo.jpg",
     Title: "React Development"
   },
   {
     id: "2",
-    Img: "/certificates/cert2.webp",
+    Img: "/Photo1.png",
     Title: "Advanced JavaScript"
   }
 ];

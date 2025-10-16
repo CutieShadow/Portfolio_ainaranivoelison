@@ -1,4 +1,5 @@
 import React, { useEffect, memo, useMemo } from "react"
+import { projects as dataProjects, certificates as dataCertificates } from "../data/firebase-mock"
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -115,17 +116,18 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 const AboutPage = () => {
   // Memoized calculations
   const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    
+    // Always use the app's data source to avoid stale localStorage counts
+    const effectiveProjects = dataProjects;
+    const effectiveCertificates = dataCertificates;
+
     const startDate = new Date("2022-11-06");
     const today = new Date();
     const experience = today.getFullYear() - startDate.getFullYear() -
       (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
 
     return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
+      totalProjects: effectiveProjects.length,
+      totalCertificates: effectiveCertificates.length,
       YearExperience: experience
     };
   }, []);
@@ -214,10 +216,8 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-             un étudiant en Ingénierie des Developpement Informatiques et 
-             intéressé Front-End. 
-             Je me concentre sur la création d'expériences numériques engageantes et
-              m'efforce toujours de fournir les meilleures solutions dans chaque projet.
+             I am a student in Computer Science Development Engineering and interested in Front-End.
+            I focus on creating engaging digital experiences and always strive to deliver the best solutions in every project.
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
