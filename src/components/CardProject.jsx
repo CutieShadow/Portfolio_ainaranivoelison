@@ -63,8 +63,6 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, hideImage
                   onClick={handleLiveDemo}
                   className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors duration-200"
                 >
-                  <span className="text-sm font-medium">Live Demo</span>
-                  <ExternalLink className="w-4 h-4" />
                 </a>
               ) : (
                 <span className="text-gray-500 text-sm">Demo Not Available</span>
