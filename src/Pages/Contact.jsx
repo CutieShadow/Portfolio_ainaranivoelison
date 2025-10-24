@@ -45,12 +45,21 @@ const ContactPage = () => {
     });
 
     try {
-      // Get form data
-      const form = e.target;
-      const formData = new FormData(form);
+      // Create FormData object
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('email', formData.email);
+      submitData.append('message', formData.message);
+      submitData.append('_template', 'table');
+      submitData.append('_captcha', 'false');
+      submitData.append('_subject', 'Nouveau message de contact');
 
-      // Submit form
-      await form.submit();
+      // Submit via fetch API to prevent page redirect
+      const response = await fetch('https://formsubmit.co/noahjoselito@gmail.com', {
+        method: 'POST',
+        body: submitData,
+        mode: 'no-cors' // This prevents CORS issues and redirects
+      });
 
       // Show success message
       Swal.fire({
@@ -142,16 +151,9 @@ const ContactPage = () => {
             </div>
 
             <form 
-              action="https://formsubmit.co/noahjoselito@gmail.com"
-              method="POST"
               onSubmit={handleSubmit}
               className="space-y-6"
             >
-              {/* FormSubmit Configuration */}
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value={window.location.origin + window.location.pathname} />
-              <input type="hidden" name="_subject" value="Nouveau message de contact" />
 
               <div
                 data-aos="fade-up"
