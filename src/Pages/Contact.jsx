@@ -14,6 +14,7 @@ const ContactPage = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -32,10 +33,11 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setIsSuccess(false);
 
     Swal.fire({
-      title: 'Sending Message...',
-      html: 'Please wait while we send your message',
+      title: 'Envoi du message...',
+      html: 'Veuillez patienter pendant l\'envoi de votre message',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -52,13 +54,16 @@ const ContactPage = () => {
 
       // Show success message
       Swal.fire({
-        title: 'Success!',
-        text: 'Your message has been sent successfully!',
+        title: 'Message envoyé !',
+        text: 'Votre message a été envoyé avec succès !',
         icon: 'success',
         confirmButtonColor: '#6366f1',
-        timer: 2000,
+        timer: 3000,
         timerProgressBar: true
       });
+
+      // Set success state
+      setIsSuccess(true);
 
       // Reset form
       setFormData({
@@ -66,10 +71,16 @@ const ContactPage = () => {
         email: "",
         message: "",
       });
+
+      // Reset success state after 5 seconds
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
+
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong. Please try again later.',
+        title: 'Erreur !',
+        text: 'Une erreur s\'est produite. Veuillez réessayer plus tard.',
         icon: 'error',
         confirmButtonColor: '#6366f1'
       });
@@ -139,6 +150,8 @@ const ContactPage = () => {
               {/* FormSubmit Configuration */}
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value={window.location.origin + window.location.pathname} />
+              <input type="hidden" name="_subject" value="Nouveau message de contact" />
 
               <div
                 data-aos="fade-up"
@@ -195,10 +208,25 @@ const ContactPage = () => {
                 data-aos-delay="400"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#6366f1]/20 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                  isSuccess 
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' 
+                    : 'bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white hover:shadow-[#6366f1]/20'
+                }`}
               >
-                <Send className="w-5 h-5" />
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSuccess ? (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Message envoyé !
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
+                  </>
+                )}
               </button>
             </form>
 
