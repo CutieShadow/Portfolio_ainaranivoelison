@@ -21,9 +21,9 @@ const socialLinks = [
   {
     name: "Instagram",
     displayName: "Instagram",
-    subText: "@noahjoselito",
+    subText: "@noah.joselito",
     icon: Instagram,
-    url: "https://www.instagram.com/noah_joselito?igsh=MWNieTBvYnJzbjJsOA%3D%3D&utm_source=qr",
+    url: "https://www.instagram.com/noah.joselito?igsh=MWNieTBvYnJzbjJsOA%3D%3D&utm_source=qr",
     color: "#E4405F",
     gradient: "from-[#833AB4] via-[#E4405F] to-[#FCAF45]"
   },
@@ -32,14 +32,14 @@ const socialLinks = [
     displayName: "Youtube",
     subText: "@noahjoselito",
     icon: Youtube,
-    url: "hhttps://www.youtube.com/channel/UC_YD_tY_prhVQVPMl23YRZQ",
+    url: "https://youtube.com/@noahjoselito?si=3RxQ7uB4mqINVn9E",
     color: "#FF0000",
     gradient: "from-[#FF0000] to-[#CC0000]"
   },
   {
     name: "GitHub",
     displayName: "Github",
-    subText: "@noah",
+    subText: "@NoahJoselito",
     icon: Github,
     url: "https://github.com/NoahJoselito",
     color: "#ffffff",
@@ -48,7 +48,7 @@ const socialLinks = [
   {
     name: "TikTok",
     displayName: "Tiktok",
-    subText: "@noah_joselito",
+    subText: "@noah.joselito",
     icon: ({ className, ...props }) => (
      <svg width="24px" height="24px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <title>Tiktok</title>
@@ -61,7 +61,7 @@ const socialLinks = [
     </g>
 </svg>
     ),
-    url: "https://www.tiktok.com/@noahjoselito?_t=ZM-8uanSF5mXsl&_r=1",
+    url: "https://www.tiktok.com/@noah_joselito?_t=ZM-90opszFFXJM&_r=1",
     color: "black",
     gradient: "from-[#000000] via-[#25F4EE] to-[#FE2C55]"
   }
