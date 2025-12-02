@@ -23,11 +23,6 @@ const router = {
 const LandingPage = ({ showWelcome, setShowWelcome }) => {
   return (
     <>
-      <AnimatePresence mode="wait">
-        {showWelcome && (
-          <WelcomeScreen onLoadingComplete={() => setShowWelcome(false)} />
-        )}
-      </AnimatePresence>
 
       {!showWelcome && (
         <>
