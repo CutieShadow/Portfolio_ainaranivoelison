@@ -200,14 +200,14 @@ const AboutPage = () => {
               data-aos-duration="1000"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-                Hello, I'm
+                Hi, I'm Aïna
               </span>
               <span 
                 className="block mt-2 text-gray-200"
                 data-aos="fade-right"
                 data-aos-duration="1300"
               >
-                ANDRIAMAMONJY Noah Joselito
+                RANIVOELISON
               </span>
             </h2>
             
@@ -216,8 +216,14 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-             I am a student in Computer Science Development Engineering and interested in Front-End.
-            I focus on creating engaging digital experiences and always strive to deliver the best solutions in every project.
+             
+a second-year Accounting and Management student currently exploring a new path.
+
+I’m transitioning toward digital, multimedia, and creative fields.
+I take my time to learn, but I’m serious about quality and progress.
+
+I enjoy creating, experimenting, and improving my work step by step.
+
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">

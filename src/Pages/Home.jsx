@@ -25,14 +25,14 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Frontend
+          Digital
         </span>
       </span>
       <br />
       <span className="relative inline-block mt-2">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
-          Developer
+          & Multimedia
         </span>
       </span>
     </h1>
@@ -77,8 +77,8 @@ const SocialLink = memo(({ icon: Icon, link }) => (
 const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
-const WORDS = ["Developper Student"];
-const TECH_STACK = ["React", "Javascript", "Node.js", "Next.js", "Tailwind CSS"];
+const WORDS = ["Digital Learner"];
+const TECH_STACK = ["Content Creation", "AI-Assisted Tools", "Video Editing",  "Visual Projects", "Excel"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/NoahJoselito" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/noah-joselito-4a13a8329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
@@ -181,7 +181,9 @@ const Home = () => {
                 <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
                   data-aos="fade-up"
                   data-aos-delay="1000">
-                  Creating Innovative, Functional, and User-Friendly Websites for Digital Solutions.
+                  I take time to shape my projects the way I imagine them.
+I search for the right visuals, build the idea, and use tools and AI to solve problems along the way.
+
                 </p>
 
                 {/* Tech Stack */}
