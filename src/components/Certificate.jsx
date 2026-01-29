@@ -2,9 +2,12 @@ import React, { useState } from "react"
 import { Modal, IconButton, Box, Fade, Backdrop, Zoom, Typography } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
 import FullscreenIcon from "@mui/icons-material/Fullscreen"
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf"
 
 const Certificate = ({ ImgSertif }) => {
 	const [open, setOpen] = useState(false)
+	// detect PDFs and handle them differently
+	const isPdf = typeof ImgSertif === 'string' && ImgSertif.toLowerCase().endsWith('.pdf')
 
 	const handleOpen = () => {
 		setOpen(true)
@@ -40,47 +43,65 @@ const Certificate = ({ ImgSertif }) => {
 						},
 					},
 				}}>
-				{/* Certificate Image with Initial Filter */}
+{/* Certificate Image or PDF placeholder */}
+		<Box
+			sx={{
+				position: "relative",
+				"&::before": {
+					content: '""',
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundColor: "rgba(0, 0, 0, 0.1)",
+					zIndex: 1,
+				},
+			}}>
+			{isPdf ? (
 				<Box
-					sx={{
-						position: "relative",
-						"&::before": {
-							content: '""',
-							position: "absolute",
-							top: 0,
-							left: 0,
-							right: 0,
-							bottom: 0,
-							backgroundColor: "rgba(0, 0, 0, 0.1)",
-							zIndex: 1,
-						},
-					}}>
-					<img
-						className="certificate-image"
-						src={ImgSertif}
-						alt="Certificate"
-						style={{
-							width: "100%",
-							height: "auto",
-							display: "block",
-							objectFit: "cover",
-							filter: "contrast(1.10) brightness(0.9) saturate(1.1)",
-							transition: "filter 0.3s ease",
-						}}
 					onClick={handleOpen}
-					onError={(e) => {
-						const tried = e.currentTarget.getAttribute('data-tried') || '';
-						if (!tried.includes('photo1')) {
-							e.currentTarget.src = '/Photo1.png';
-							e.currentTarget.setAttribute('data-tried', tried + ' photo1');
-							return;
-						}
-						if (!tried.includes('photo')) {
-							e.currentTarget.src = '/Photo.jpg';
-							e.currentTarget.setAttribute('data-tried', tried + ' photo');
-						}
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						justifyContent: "center",
+						height: 200,
+						cursor: "pointer",
+						backgroundColor: "#0f1724",
+						color: "white",
+					}}>
+					<PictureAsPdfIcon sx={{ fontSize: 56, mb: 1 }} />
+					<Typography variant="subtitle2">Open PDF</Typography>
+				</Box>
+			) : (
+				<img
+					className="certificate-image"
+					src={ImgSertif}
+					alt="Certificate"
+					style={{
+						width: "100%",
+						height: "auto",
+						display: "block",
+						objectFit: "cover",
+						filter: "contrast(1.10) brightness(0.9) saturate(1.1)",
+						transition: "filter 0.3s ease",
 					}}
-					/>
+				onClick={handleOpen}
+				onError={(e) => {
+					const tried = e.currentTarget.getAttribute('data-tried') || '';
+					if (!tried.includes('photo1')) {
+						e.currentTarget.src = '/Photo1.png';
+						e.currentTarget.setAttribute('data-tried', tried + ' photo1');
+						return;
+					}
+					if (!tried.includes('photo')) {
+						e.currentTarget.src = '/Photo.jpg';
+						e.currentTarget.setAttribute('data-tried', tried + ' photo');
+					}
+				}}
+				/>
+			)}
 				</Box>
 
 				{/* Hover Overlay */}
@@ -188,7 +209,16 @@ const Certificate = ({ ImgSertif }) => {
 						<CloseIcon sx={{ fontSize: 24 }} />
 					</IconButton>
 
-					{/* Modal Image */}
+					{/* Modal content (image or embedded PDF) */}
+				{isPdf ? (
+					<Box sx={{ width: "100%", height: "90vh" }}>
+						<iframe
+							src={ImgSertif}
+							title="Certificate PDF"
+							style={{ width: "100%", height: "100%", border: "none" }}
+						/>
+					</Box>
+				) : (
 					<img
 						src={ImgSertif}
 						alt="Certificate Full View"
