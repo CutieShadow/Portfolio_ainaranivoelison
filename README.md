@@ -103,7 +103,30 @@ Untuk melakukan konfigurasi Firebase dalam project ini, ikuti langkah berikut:
 
 
 
-    
-      
 
+---
 
+## 🔧 Changer le nom / config centralisée
+
+Tu peux maintenant changer le nom affiché et d'autres informations (CV, e‑mail, liens sociaux) depuis un seul fichier :
+
+- Ouvre `src/config/site.json` et modifie `displayName`, `firstName`, `lastName`, `cvDownloadName`, `github`, `linkedin`, `instagram`, `email`.
+
+Ou utilise le script automatique (pratique si tu préfères cliquer) :
+
+- Installe les dépendances si ce n'est pas fait : `npm install`
+- Lance dans le terminal : `npm run site:update -- --firstName "Aïna" --lastName "RANIVOELISON" --displayName "Aïna Ranivoelison" --cvName "Aina_Ranivoelison.pdf"`
+
+➡️ **One‑click (bouton) dans VS Code** :
+
+1. Ouvre **Command Palette** (Ctrl+Shift+P) → tape **Tasks: Run Task** → sélectionne **Update Site & Start Dev**.
+2. Ou dans la barre latérale, va à **Terminal → Run Task...** et choisis **Update Site & Start Dev**.
+
+Cela exécutera le script `site:update` puis démarre le serveur de développement (`npm run dev`) dans un terminal intégré — tu n'as qu'à cliquer.
+
+Astuce alternative : la vue **NPM SCRIPTS** (explorer latéral) te permet aussi de cliquer sur les scripts `site:update` et `dev` individuellement.
+
+Note importante :
+- Le script met à jour la configuration et les références dans le code. Il ne modifie pas le contenu du PDF (le fichier publié est maintenant `public/assets/Aina_Ranivoelison.pdf`) — si tu veux un CV personnalisé, remplace le fichier PDF manuellement.
+
+---

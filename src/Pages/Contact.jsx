@@ -6,6 +6,7 @@ import Komentar from "../components/Commentar";
 import Swal from "sweetalert2";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import site from "../config/site.json";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ const ContactPage = () => {
       submitData.append('_subject', 'Nouveau message de contact');
 
       // Submit via fetch API to prevent page redirect
-      const response = await fetch('https://formsubmit.co/noahjoselito@gmail.com', {
+      const response = await fetch(`https://formsubmit.co/${site.email}`, {
         method: 'POST',
         body: submitData,
         mode: 'no-cors' // This prevents CORS issues and redirects

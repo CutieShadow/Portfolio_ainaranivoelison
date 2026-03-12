@@ -1,8 +1,9 @@
 import React, { useEffect, memo, useMemo } from "react"
-import { projects as dataProjects, certificates as dataCertificates } from "../data/firebase-mock"
+import { projects as dataProjects, certificates as dataCertificates } from "../data/projects"
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import site from "../config/site.json";
 
 // Memoized Components
 const Header = memo(() => (
@@ -161,28 +162,28 @@ const AboutPage = () => {
     {
       icon: Code,
       color: "from-[#6366f1] to-[#a855f7]",
-      value: totalProjects,
-      label: "Total Projects",
-      description: "Innovative web solutions crafted",
+      value: 5,
+      label: "TOTAL PROJECT",
+      description: "Academic & Creative Projects",
       animation: "fade-right",
     },
     {
       icon: Award,
       color: "from-[#a855f7] to-[#6366f1]",
-      value: totalCertificates,
-      label: "Certificates",
-      description: "Professional skills validated",
+      value: 4,
+      label: "CERTIFICATES",
+      description: "Academic Degrees & Certifications",
       animation: "fade-up",
     },
     {
       icon: Globe,
       color: "from-[#6366f1] to-[#a855f7]",
-      value: YearExperience,
-      label: "Years of Experience",
-      description: "Continuous learning journey",
+      value: 4,
+      label: "LEARNING JOURNEY",
+      description: "Continuous Learning and Skill Development",
       animation: "fade-left",
     },
-  ], [totalProjects, totalCertificates, YearExperience]);
+  ], []);
 
   return (
     <div
@@ -200,36 +201,33 @@ const AboutPage = () => {
               data-aos-duration="1000"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-                Hi, I'm Aïna
+                {`Hi, I'm ${site.firstName}`}
               </span>
               <span 
                 className="block mt-2 text-gray-200"
                 data-aos="fade-right"
                 data-aos-duration="1300"
               >
-                RANIVOELISON
+                {site.lastName}
               </span>
             </h2>
             
             <p 
-              className="text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed text-justify pb-4 sm:pb-0"
+              className="text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed text-justify pb-4 sm:pb-8"
               data-aos="fade-right"
               data-aos-duration="1500"
             >
              
-a second-year Accounting and Management student currently exploring a new path.
-
-I’m transitioning toward digital, multimedia, and creative fields.
-I take my time to learn, but I’m serious about quality and progress.
-
-I enjoy creating, experimenting, and improving my work step by step.
+I’m drawn to digital and creative fields because I enjoy turning ideas into visual and meaningful projects. 
+I like exploring tools, shaping concepts, and improving my work step by step, with a strong focus on quality and creativity.
 
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
+              <div className="flex flex-row gap-3 w-full lg:w-auto">
               <a 
-                href="/assets/CV.pdf" 
-                download="ANDRIAMAMONJY_Noah_Joselito.pdf"
+                href="/assets/Aina_Ranivoelison.pdf" 
+                download={site.cvDownloadName}
                 className="w-full lg:w-auto"
               >
               <button 
@@ -240,13 +238,28 @@ I enjoy creating, experimenting, and improving my work step by step.
                 <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
               </button>
               </a>
-              <a href="#Portofolio" className="w-full lg:w-auto">
+
+              <a 
+                href="/assets/Letter_of_recommendation.pdf" 
+                download={site.recommendationDownloadName}
+                className="w-full lg:w-auto"
+              >
+              <button 
+                data-aos="fade-up"
+                data-aos-duration="900"
+                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-[#a855f7]/50 text-[#a855f7] font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-[#a855f7]/10 animate-bounce-slow delay-200"
+              >
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" /> Letter of recommendation
+              </button>
+              </a>
+              </div>
+              <a href="/assets/Lettre_de_motivation.pdf" download="Lettre_de_motivation.pdf" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
                 data-aos-duration="1000"
                 className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-[#a855f7]/50 text-[#a855f7] font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-[#a855f7]/10 animate-bounce-slow delay-200"
               >
-                <Code className="w-4 h-4 sm:w-5 sm:h-5" /> View Projects
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Lettre de motivation
               </button>
               </a>
             </div>
@@ -266,7 +279,7 @@ I enjoy creating, experimenting, and improving my work step by step.
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0); }
+          0%, 50% { transform: translateY(0); }
           50% { transform: translateY(-20px); }
         }
         @keyframes spin-slower {

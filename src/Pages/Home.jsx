@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, memo } from "react"
-import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
+import { Mail, ExternalLink, Sparkles } from "lucide-react"
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import site from "../config/site.json";
 
 // Memoized Components
 const StatusBadge = memo(() => (
@@ -25,14 +26,14 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Digital
+          digital
         </span>
       </span>
       <br />
       <span className="relative inline-block mt-2">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
-          & Multimedia
+          & mutimedia
         </span>
       </span>
     </h1>
@@ -73,6 +74,22 @@ const SocialLink = memo(({ icon: Icon, link }) => (
   </a>
 ));
 
+// Simple WhatsApp icon component (used in Home & SocialLinks)
+const WhatsAppIcon = ({ className }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+    <path d="M21.05 2.999A11.957 11.957 0 0012 0C5.373 0 0 5.373 0 12c0 2.11.554 4.082 1.52 5.81L0 24l6.41-1.49A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12 0-1.86-.42-3.622-1.15-5.201z" fill="#25D366" />
+    <path d="M17.8 14.4c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.19.3-.77.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.18.2-.31.3-.52.1-.2.05-.39-.03-.54-.08-.15-.67-1.62-.92-2.22-.24-.59-.48-.51-.67-.52-.17-.01-.37-.01-.57-.01-.2 0-.53.07-.81.39-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.14.2 2.1 3.39 5.09 4.75 3 1.36 3.41.95 4.03.89.61-.06 1.98-.81 2.26-1.59.28-.78.28-1.44.2-1.59-.08-.15-.28-.24-.58-.39z" fill="#fff" />
+  </svg>
+);
+
+// Simple Discord icon component (used in Home & SocialLinks)
+const DiscordIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60.7 4.5C55.9 2.3 51 1 46 0 45.6 2.5 44.6 4.8 43.1 6.6c-6.3-1-12.6-1-18.9 0 1.7-1.9 3.5-4.5 3.9-7.2C24 2.5 18.2 7 14.2 12.6 4.6 27.4 9.6 43 9.6 43c10.7 3.9 21.8 4.6 32.5 4.6 10.7 0 21.8-0.7 32.5-4.6 0 0 5-15.6-4.6-30.4z" fill="#5865F2" />
+    <path d="M24 27.5c1.7 0 3-1.6 3-3.5s-1.3-3.5-3-3.5-3 1.6-3 3.5 1.3 3.5 3 3.5zm23 0c1.7 0 3-1.6 3-3.5s-1.3-3.5-3-3.5-3 1.6-3 3.5 1.3 3.5 3 3.5z" fill="#fff" />
+  </svg>
+);
+
 // Constants
 const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
@@ -80,9 +97,9 @@ const PAUSE_DURATION = 2000;
 const WORDS = ["Digital Learner"];
 const TECH_STACK = ["Content Creation", "AI-Assisted Tools", "Video Editing",  "Visual Projects", "Excel"];
 const SOCIAL_LINKS = [
-  { icon: Github, link: "https://github.com/NoahJoselito" },
-  { icon: Linkedin, link: "https://www.linkedin.com/in/noah-joselito-4a13a8329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
-  { icon: Instagram, link: "https://www.instagram.com/noah_joselito?igsh=MWNieTBvYnJzbjJsOA%3D%3D&utm_source=qr" }
+  { icon: Mail, link: `mailto:${site.email}` },
+  { icon: DiscordIcon, link: site.discord || "https://discord.gg/DuCg9ADs" },
+  { icon: WhatsAppIcon, link: site.whatsapp ? `https://wa.me/${site.whatsapp}` : "#" }
 ];
 
 const Home = () => {

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from 'react';
 import "./index.css";
+import site from "./config/site.json";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import AnimatedBackground from "./components/Background";
@@ -33,7 +34,7 @@ const LandingPage = () => {
           <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
             © 2025{" "}
             <a href="https://flowbite.com/" className="hover:underline">
-              Noah
+              {site.displayName}
             </a>
             . All Rights Reserved.
           </span>
@@ -52,7 +53,7 @@ const ProjectPageLayout = () => (
         <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
           © 2025{" "}
           <a href="https://flowbite.com/" className="hover:underline">
-            Noah
+            {site.displayName}
           </a>
           . All Rights Reserved.
         </span>

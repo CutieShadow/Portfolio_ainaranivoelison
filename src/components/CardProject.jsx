@@ -6,17 +6,13 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, hideImage
   // Handle kasus ketika ProjectLink kosong
   const handleLiveDemo = (e) => {
     if (!ProjectLink) {
-      console.log("ProjectLink kosong");
       e.preventDefault();
-      alert("Live demo link is not available");
     }
   };
   
   const handleDetails = (e) => {
     if (!id) {
-      console.log("ID kosong");
       e.preventDefault();
-      alert("Project details are not available");
     }
   };
   
