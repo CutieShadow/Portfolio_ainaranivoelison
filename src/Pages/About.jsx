@@ -259,7 +259,7 @@ I like exploring tools, shaping concepts, and improving my work step by step, wi
                 data-aos-duration="1000"
                 className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-[#a855f7]/50 text-[#a855f7] font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-[#a855f7]/10 animate-bounce-slow delay-200"
               >
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Lettre de motivation
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Letter of motivation
               </button>
               </a>
             </div>
